@@ -2,9 +2,9 @@ package com.koreait.basic2.user;
 
 import com.koreait.basic2.Utils;
 import com.koreait.basic2.dao.UserDAO;
+import com.koreait.basic2.user.model.UserEntity;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

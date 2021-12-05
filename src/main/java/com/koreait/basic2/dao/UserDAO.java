@@ -1,7 +1,7 @@
 package com.koreait.basic2.dao;
 
 import com.koreait.basic2.DbUtils;
-import com.koreait.basic2.user.UserEntity;
+import com.koreait.basic2.user.model.UserEntity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

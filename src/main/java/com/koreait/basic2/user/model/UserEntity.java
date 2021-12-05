@@ -1,4 +1,4 @@
-package com.koreait.basic2.user;
+package com.koreait.basic2.user.model;
 
 import lombok.Getter;
 import lombok.Setter;

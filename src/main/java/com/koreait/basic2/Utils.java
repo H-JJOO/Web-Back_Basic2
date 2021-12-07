@@ -1,8 +1,13 @@
 package com.koreait.basic2;
 
+import com.koreait.basic2.user.model.UserEntity;
+import org.apache.catalina.User;
+
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class Utils {
@@ -34,6 +39,16 @@ public class Utils {
         String strVal = req.getParameter(key);
         int intVal = parseStringToInt(strVal);
         return intVal;
+    }
+
+    public static UserEntity getLoginUser(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        return (UserEntity)session.getAttribute("loginUser");
+    }
+
+    public static int getLoginUserPk(HttpServletRequest req) {
+        UserEntity loginUser = getLoginUser(req);
+        return loginUser == null ? 0 : loginUser.getIuser();
     }
 
 

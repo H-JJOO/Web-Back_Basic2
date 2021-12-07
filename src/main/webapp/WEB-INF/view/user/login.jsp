@@ -5,8 +5,13 @@
         <div><input type="password" name="upw" placeholder="비밀번호"></div>
         <div>
             <input type="submit" value="로그인">
-            <a href="/user/login"><input type="button" value="회원가입"></a>
         </div>
     </form>
+    <div>
+        <a href="/user/login"><input type="button" value="회원가입"></a>
+    </div>
+    <div>
+        <input type="button" value="비밀번호 보이기" id="btnShowPw">
+    </div>
 </div>
 <script src="/res/js/user/login.js"></script>

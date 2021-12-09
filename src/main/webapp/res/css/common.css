@@ -7,11 +7,14 @@ ul {list-style: none;}
 
 .container {display: grid; grid-template-rows: 100px 1fr 80px; min-height: 100vh;}
 
+
 .header {background-color: #77fa9d; padding: 10px 30px;}
 .topMenu {display: flex;}
 .topMenu li a {collapse: #fff;}
 .topMenu li a:hover {color: #efefef; font-size: 20px;}
 .topMenu li:not(first-child) {margin-left: 10px;}
 .topMenu li {color: #000000;}
+.topMenu li.logout{flex-grow: 1; text-align: right;}
+.topMenu li.wellcom{flex-grow: 99; text-align: right;}
 .body {padding: 20px;}
 .footer {background-color: #585858; color: #fff; display: flex; justify-content: center; align-items: center;}

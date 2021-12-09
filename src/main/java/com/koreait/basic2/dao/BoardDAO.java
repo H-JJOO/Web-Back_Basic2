@@ -1,6 +1,7 @@
 package com.koreait.basic2.dao;
 
 import com.koreait.basic2.DbUtils;
+import com.koreait.basic2.board.model.BoardDTO;
 import com.koreait.basic2.board.model.BoardEntity;
 import com.koreait.basic2.board.model.BoardVO;
 
@@ -104,6 +105,109 @@ public class BoardDAO {
         return list;
     }
 
+    public static BoardVO selBoardDetail (BoardDTO param) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT A.title, A.ctnt, A.hits, A.writer, A.rdt, B.nm AS writerNm " +
+                    " FROM t_board A " +
+                    " INNER JOIN t_user B " +
+                    " ON A.writer = B.iuser " +
+                    " WHERE iboard = ? ";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, param.getIboard());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                BoardVO vo = BoardVO.builder()
+                        .iboard(param.getIboard())
+                        .title(rs.getString("title"))
+                        .ctnt(rs.getString("ctnt"))
+                        .hits(rs.getInt("hits"))
+                        .writer(rs.getInt("writer"))
+                        .rdt(rs.getString("rdt"))
+                        .writerNm(rs.getString("writerNm"))
+                        .build();
+                return vo;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps, rs);
+        }
+        return null;
+    }
+
+    public static int selPrevBoard(BoardDTO param) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT iboard FROM t_board " +
+                    " WHERE iboard > ? " +
+                    " ORDER BY iboard ";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, param.getIboard());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("iboard");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps, rs);
+        }
+        return 0;
+    }
+
+    public static int selNextBoard(BoardDTO param) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT iboard FROM t_board " +
+                " WHERE iboard < ? " +
+                " ORDER BY iboard DESC ";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, param.getIboard());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("iboard");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps, rs);
+        }
+        return 0;
+    }
+
+    public static void updBoardHitUp (BoardDTO param) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        String sql = " UPDATE t_board SET hits = hits + 1 WHERE iboard = ? ";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, param.getIboard());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps);
+        }
+    }
+
     public static int updBoard(BoardEntity entity) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -121,6 +225,27 @@ public class BoardDAO {
             ps.setString(2, entity.getCtnt());
             ps.setInt(3, entity.getIboard());
             ps.setInt(4, entity.getWriter());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps);
+        }
+        return 0;
+    }
+
+    public static int delBoard(BoardEntity entity) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        String sql = " DELETE FROM t_board " +
+                    " WHERE iboard = ? " +
+                    " AND writer = ? ";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, entity.getIboard());
+            ps.setInt(2, entity.getWriter());
             return ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,0 +1,10 @@
+.detail {border: 5px dashed #77fa9d;}
+.detail > div {margin: 5px;}
+
+.btnPos > a > button {width: 50px; height: 30px; margin: 5px; }
+
+.moveBtn > a > span > button {
+    width: 50px;
+    height: 30px;
+    margin: 5px;
+}

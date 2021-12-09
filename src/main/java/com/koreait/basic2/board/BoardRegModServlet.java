@@ -1,6 +1,7 @@
 package com.koreait.basic2.board;
 
 import com.koreait.basic2.Utils;
+import com.koreait.basic2.board.model.BoardDTO;
 import com.koreait.basic2.board.model.BoardEntity;
 import com.koreait.basic2.dao.BoardDAO;
 
@@ -15,7 +16,17 @@ import java.io.IOException;
 public class BoardRegModServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        int iboard = Utils.getParameterInt(req, "iboard");
         String title = "글등록";
+
+        if (iboard > 0) {
+            title = "글수정";
+            if (req.getAttribute("data") == null) {
+                BoardDTO param = new BoardDTO();
+                param.setIboard(iboard);
+                req.setAttribute("data", BoardDAO.selBoardDetail(param));
+            }
+        }
         Utils.displayView(title, "/board/regmod", req, res);
     }
 
@@ -29,7 +40,9 @@ public class BoardRegModServlet extends HttpServlet {
 
         int iboard = Utils.getParameterInt(req, "iboard");
         String title = req.getParameter("title");
+        title = title.replace("<", "&lt").replace(">", "&gt");
         String ctnt = req.getParameter("ctnt");
+        ctnt = ctnt.replace("<", "&lt").replace(">", "&gt");
 
         int result = 0;
         BoardEntity entity = new BoardEntity();
@@ -46,7 +59,7 @@ public class BoardRegModServlet extends HttpServlet {
         switch (result) {
             case 1:
                 if (entity.getIboard() != 0) {
-                    res.sendRedirect("/board/detail?ibaord=" + entity.getIboard());
+                    res.sendRedirect("/board/detail?iboard=" + entity.getIboard());
                     return;
                 }
                 break;

@@ -5,12 +5,10 @@ if (frm) {
         if (frm.uid.value.length < 5 || frm.uid.value.length > 20) {
             alert('아이디는 5~20글자 입니다.');
             e.preventDefault();
-            return;
         }
         if (frm.upw.value.length < 5) {
             alert('비밀번호를 확인해 주세요.');
             e.preventDefault();
-            return;
         }
     }
     frm.addEventListener('submit', frmSubmitEvent);

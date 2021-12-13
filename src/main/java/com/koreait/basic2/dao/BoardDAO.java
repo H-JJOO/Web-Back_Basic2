@@ -24,11 +24,13 @@ public class BoardDAO {
         try {
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //DB상에 AUTO_INCREMENT로 인해 자동으로 생성되어진 key(=id)를 가져오는 쿼리(글 작성후 Detail로 가기위해 필요한 iboard(PK) 값을 가져오기 위해서
             ps.setString(1, entity.getTitle());
             ps.setString(2, entity.getCtnt());
             ps.setInt(3, entity.getWriter());
             result = ps.executeUpdate();
             rs = ps.getGeneratedKeys();
+            //pk값 들어있음
             if (rs.next()) {
                 int iboard = rs.getInt(1);
                 entity.setIboard(iboard);

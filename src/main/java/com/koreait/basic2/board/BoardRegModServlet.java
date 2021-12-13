@@ -34,6 +34,7 @@ public class BoardRegModServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         int loginUserPk = Utils.getLoginUserPk(req);
         if (loginUserPk == 0) {
+            req.setAttribute("err", "정상적인 방법으로 접근하세요!!!");
             res.sendRedirect("/user/login");
             return;
         }

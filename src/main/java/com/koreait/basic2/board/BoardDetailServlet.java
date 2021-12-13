@@ -17,7 +17,7 @@ import java.io.IOException;
 public class BoardDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//        int nohits = Utils.getParameterInt(req, "nohits");
+        int nohits = Utils.getParameterInt(req, "nohits");
         int iboard = Utils.getParameterInt(req, "iboard");
 
         BoardDTO param = new BoardDTO();
@@ -29,7 +29,7 @@ public class BoardDetailServlet extends HttpServlet {
         BoardVO data = BoardDAO.selBoardDetail(param);
 
         int loginUserPk = Utils.getLoginUserPk(req);
-        if (data.getWriter() != loginUserPk) {//&& nohits != 1
+        if (data.getWriter() != loginUserPk && nohits != 1) {//
             BoardDAO.updBoardHitUp(param);
         }
 
